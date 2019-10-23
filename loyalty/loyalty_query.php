@@ -2,7 +2,8 @@
 	
 	header('Content-Type: text/html; charset=utf-8');
 	date_default_timezone_set('Etc/GMT-3');
-	
+
+	require_once('../settings.php');	
 	require_once('../5c_files_lib.php');
 
 	$log_file='../logs/mobile_log.txt';
@@ -10,15 +11,6 @@
 	error_reporting(E_ALL);
 	ini_set('display_errors', 1);
 
-	$host_ip='';
-	if( array_key_exists('SERVER_ADDR', $_SERVER) ) {
-			$host_ip=$_SERVER['SERVER_ADDR'];
-	}
-
-	$host_port='';
-	if( array_key_exists('SERVER_PORT', $_SERVER) ) {
-			$host_port=$_SERVER['SERVER_PORT'];
-	}
 	
 	@$MethodId=$_REQUEST['Method'];
 	@$CodeString=$_REQUEST['CodeString'];
@@ -164,7 +156,7 @@
 		$SoapClient1C = NULL;
 
 		if( is_null($SoapClient1C) ) {
-			$SoapClient1C = new SoapClient("http://127.0.0.1:8080/database_name/ws/wsloyalty.1cws?wsdl", array('login' => 'WebService', 'password' => 'passwd'));
+			$SoapClient1C = new SoapClient("http://".$http_server.":".$http_server_port."/".trim($publication_path, ' /')."/ws/wsloyalty.1cws?wsdl", array('login'=>$user_login, 'password'=>$user_password));
 		}
 	}
 	 

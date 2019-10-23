@@ -1,5 +1,7 @@
 <?php
-	require('5c_files_lib.php');
+
+	require_once('settings.php');
+	require_once('5c_files_lib.php');
 
 
 	header('Content-type: text/html; charset=utf-8'); 
@@ -105,22 +107,22 @@
 	if(!isset($AdvChannel)) {
 		$AdvChannel='';
 	}
-	@$session_id=$_GET['session_id'];
+	@$session_id=$_REQUEST['session_id'];
 	if(!isset($session_id)) {
 		$session_id='';
 	}
 
-	@$user_id=$_GET['user_id'];
+	@$user_id=$_REQUEST['user_id'];
 	if(!isset($user_id)) {
 		$user_id='';
 	}
 
-	@$Duration=$_GET['Duration'];
+	@$Duration=$_REQUEST['Duration'];
 	if(!isset($Duration)) {
 		$Duration='';
 	}
 
-	@$Parts=$_GET['Parts'];
+	@$Parts=$_REQUEST['Parts'];
 	if(!isset($Parts)) {
 
 		$Parts='<?xml version="1.0" encoding="UTF-8"?><data>';		
@@ -189,7 +191,7 @@
 
 
 	try {
-		$SoapClient1C = new SoapClient("http://127.0.0.1:8080/database_name/ws/wsoktellexchange.1cws?wsdl", array('login'=>'WebService', 'password'=>'passwd'));
+		$SoapClient1C = new SoapClient("http://".$http_server.":".$http_server_port."/".trim($publication_path, ' /')."/ws/wsoktellexchange.1cws?wsdl", array('login'=>$user_login, 'password'=>$user_password));
 	}
 
 	catch (Exception $e) {

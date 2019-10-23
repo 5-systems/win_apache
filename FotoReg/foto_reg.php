@@ -1,6 +1,8 @@
 <?php
-# âûçûâàåòñÿ ïðè ðåãèñòðàöèè àâòî ôîòîêàìåðîé
-# log-ôàéë: \htdocs\foto_reg.txt
+# Ð²Ñ‹Ð·Ñ‹Ð²Ð°ÐµÑ‚ÑÑ Ð¿Ñ€Ð¸ Ñ€ÐµÐ³Ð¸ÑÑ‚Ñ€Ð°Ñ†Ð¸Ð¸ Ð°Ð²Ñ‚Ð¾ Ñ„Ð¾Ñ‚Ð¾ÐºÐ°Ð¼ÐµÑ€Ð¾Ð¹
+# log-Ñ„Ð°Ð¹Ð»: \htdocs\foto_reg.txt
+
+	require_once('../settings.php');
 
 	header('Content-type: text/html; charset=utf-8'); 
 
@@ -51,8 +53,8 @@
 
 	ini_set("soap.wsdl_cache_enabled", "0");
 	try {
-
-		$SoapClient1C = new SoapClient("http://127.0.0.1:8080/database_name/ws/wsFotoRegistration.1cws?wsdl", array('login'=>'WebService', 'password'=>'passwd'));
+	
+		$SoapClient1C = new SoapClient("http://".$http_server.":".$http_server_port."/".trim($publication_path, ' /')."/ws/wsFotoRegistration.1cws?wsdl", array('login'=>$user_login, 'password'=>$user_password));
 
 	}
 	 catch (Exception $e) {

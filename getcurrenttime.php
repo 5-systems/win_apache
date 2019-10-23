@@ -1,11 +1,12 @@
 <?php
+
+	require_once('settings.php');
 	
 	ini_set('default_socket_timeout', 10);
-
 	ini_set("soap.wsdl_cache_enabled", "0");
 
 	try {
-		$SoapClient1C = new SoapClient("http://127.0.0.1:8080/database_name/ws/wsoktellexchange.1cws?wsdl", array('login'=>'WebService', 'password'=>'passwd'));
+		$SoapClient1C = new SoapClient("http://".$http_server.":".$http_server_port."/".trim($publication_path, ' /')."/ws/wsoktellexchange.1cws?wsdl", array('login'=>$user_login, 'password'=>$user_password));
 	}
 
 
