@@ -3,7 +3,8 @@
 	header('Content-Type: text/html; charset=utf-8');
 	date_default_timezone_set('Etc/GMT-3');
 
-	require_once('../settings.php');	
+	require_once('../settings.php');
+	require_once('../5c_std_lib.php');	
 	require_once('../5c_files_lib.php');
 
 	$log_file='../logs/mobile_log.txt';

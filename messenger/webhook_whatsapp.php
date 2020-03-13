@@ -3,7 +3,8 @@
 	error_reporting(E_ALL);
 	ini_set('display_errors', 1);
 	
-	require_once('../settings.php');	
+	require_once('../settings.php');
+	require_once('../5c_std_lib.php');
 	require_once('../5c_files_lib.php');
 	
 	# Set timezone

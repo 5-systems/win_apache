@@ -1,6 +1,7 @@
 <?php
 
 	require_once('../settings.php');
+	require_once('../5c_std_lib.php');	
 	require_once('../5c_files_lib.php');
 
 	date_default_timezone_set ('Etc/GMT-3');

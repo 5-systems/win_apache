@@ -1,7 +1,7 @@
 <?php
 
-// version 24.05.2018
-include_once('5c_std_lib.php');
+// version 13.03.2020
+//include_once('5c_std_lib.php');
 
 date_default_timezone_set('Etc/GMT-3');
 ini_set("default_socket_timeout", 600);

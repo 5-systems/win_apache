@@ -1,6 +1,7 @@
 <?php
 
 	require_once('settings.php');
+	require_once('5c_std_lib.php');
 	require_once('5c_files_lib.php');
 
 
@@ -130,6 +131,10 @@
 			$Parts.='<object type="string" name="session_id">'.$session_id.'</object>'.'<object type="string" name="user_id">'.$user_id.'</object>';
 		}
 
+		if( strlen($WebPage)>0 && $WebPage==='JivoSite' ) {
+			$Parts.='<object type="string" name="ВидОбращения">Чат</object>';
+		}		
+		
 		if( strlen($Duration)>0 ) {
 			$Parts.='<object type="string" name="Duration">'.$Duration.'</object>';
 		}
