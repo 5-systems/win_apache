@@ -25,7 +25,7 @@
 	if ($fp) {
 	
 		$mytext=date('Ymd H:i:s').' ';
-		while( list($key, $value)=each($_REQUEST) ) {
+		foreach($_REQUEST as $key=>$value) {
 			$mytext.=$key.'='.$value.', ';
 		}
 
