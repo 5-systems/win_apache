@@ -4,14 +4,13 @@
 	require_once('5c_std_lib.php');
 	require_once('5c_files_lib.php');
 
+	//error_reporting(E_ALL);
+	//ini_set('display_errors', 1);
+	error_reporting(0);
+	ini_set('display_errors', 0);	
 
 	header('Content-type: text/html; charset=utf-8'); 
 	date_default_timezone_set('Etc/GMT-3');
-
-
-	error_reporting(E_ALL);
-	ini_set('display_errors', 1);
- 
 
 	$file_name="logs/call_log.txt";
 
@@ -117,6 +116,21 @@
 	if(!isset($user_id)) {
 		$user_id='';
 	}
+	
+	@$x_roistat=$_REQUEST['X_ROISTAT'];
+	if(!isset($x_roistat)) {
+		$x_roistat='';
+	}
+
+	@$x_roistat_phone=$_REQUEST['X_ROISTAT_PHONE'];
+	if(!isset($x_roistat_phone)) {
+		$x_roistat_phone='';
+	}
+
+	@$x_roistat_marker=$_REQUEST['X_ROISTAT_MARKER'];
+	if(!isset($x_roistat_marker)) {
+		$x_roistat_marker='';
+	}	
 
 	@$Duration=$_REQUEST['Duration'];
 	if(!isset($Duration)) {
@@ -139,6 +153,12 @@
 			$Parts.='<object type="string" name="Duration">'.$Duration.'</object>';
 		}
 
+		if( strlen($x_roistat)>0 ) {
+			$Parts.='<object type="string" name="x-roistat">'.$x_roistat.'</object>';
+			$Parts.='<object type="string" name="x-roistat-phone">'.$x_roistat_phone.'</object>';
+			$Parts.='<object type="string" name="x-roistat-marker">'.$x_roistat_marker.'</object>';
+		}		
+		
 		$Parts.='</data>';
 
 	}
@@ -184,7 +204,9 @@
 	$params_log['user_id']=$user_id;
 	$params_log['session_id']=$session_id;
 	$params_log['Parts']=$Parts;
-
+	$params_log['X_ROISTAT']=$x_roistat;
+	$params_log['X_ROISTAT_PHONE']=$x_roistat_phone;
+	$params_log['X_ROISTAT_MARKER']=$x_roistat_marker;
 
 	write_log($params_log, $file_name);
 
@@ -192,7 +214,6 @@
 #	Connect to 1C
 	ini_set('default_socket_timeout', 10);
 	ini_set("soap.wsdl_cache_enabled", "0");
-
 
 
 	try {
