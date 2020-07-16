@@ -21,6 +21,7 @@
 		$params['CallId']=$CallId;
 		$params['CallerNumber']=$CallerNumber;
 		$params['ParsedCallerNumber']=$ParsedCallerNumber;
+		$params['OutputFirstNames']='0';
 
 		try{
 			$Result = $SoapClient1C->GetCallerData($params);
