@@ -152,7 +152,11 @@
 	// Write log
 	write_log($_REQUEST, $log_file);
 
-	ini_set("soap.wsdl_cache_enabled", "0");
+	ini_set("soap.wsdl_cache_enabled", "1");
+	ini_set("soap.wsdl_cache_limit", "10");
+	ini_set("soap.wsdl_cache_ttl", "100000000");
+	ini_set("soap.wsdl_cache", WSDL_CACHE_MEMORY);
+	
 	try {
 		$SoapClient1C = NULL;
 

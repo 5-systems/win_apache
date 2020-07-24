@@ -35,7 +35,11 @@
 		fclose($fp); 
 	}
 
-	ini_set("soap.wsdl_cache_enabled", "0");
+	ini_set("soap.wsdl_cache_enabled", "1");
+	ini_set("soap.wsdl_cache_limit", "10");
+	ini_set("soap.wsdl_cache_ttl", "100000000");
+	ini_set("soap.wsdl_cache", WSDL_CACHE_MEMORY);
+	
 	try {
 		$SoapClient1C = new SoapClient("http://".$http_server.":".$http_server_port."/".trim($publication_path, ' /')."/ws/wsMessenger.1cws?wsdl", array('login'=>$user_login, 'password'=>$user_password));
 	}
