@@ -43,7 +43,7 @@
 
 
 		if( gettype($Result)==="object" ) {
-			$return_result=strVal($Result->return);
+			$return_result=trim(strVal($Result->return));
 			write_log('result='.$return_result, $file_name);
 			echo $return_result;
 		}

@@ -30,15 +30,14 @@
 		}
 		catch(Exception $e){
 			echo $e->getMessage();
+			exit;
 		}
 
 
 		if( gettype($Result)==="object" ) {
-
-			echo $Result->return;
-
+			$return_result=trim(strVal($Result->return));
+			echo $return_result;
 		}
-
 
 	}
 
