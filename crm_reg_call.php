@@ -16,16 +16,23 @@
 
 
 #	Initialization
+	@$CallId=$_REQUEST['CallId'];
 	if(!isset($CallId)) {
-		@$CallId=$_REQUEST['CallId'];
+		@$CallId=sprintf("%.6f", microtime(true));
 	}
-
+	
+	@$CallDate=$_REQUEST['CallDate'];
 	if(!isset($CallDate)) {
-		@$CallDate=$_REQUEST['CallDate'];
+		$CallDate='';
 	}
 
+	@$CallerNumber=$_REQUEST['CallerNumber'];	
 	if(!isset($CallerNumber)) {
-		@$CallerNumber=$_REQUEST['CallerNumber'];
+		@$CallerNumber=$_REQUEST['phone'];
+		
+		if(!isset($CallerNumber)) {
+			$CallerNumber='';
+		}
 	}
 
 	if(!isset($CalledNumber)) {
@@ -54,7 +61,11 @@
 	
 	@$ContactInfo=$_REQUEST['ContactInfo'];
 	if(!isset($ContactInfo)) {
-		$ContactInfo='';
+		@$ContactInfo=$_REQUEST['name'];
+		
+		if(!isset($ContactInfo)) {
+			$ContactInfo='';
+		}
 	}
 
 	@$FirstCalledNumber=$_REQUEST['FirstCalledNumber'];
@@ -70,12 +81,20 @@
 
 	@$WebPage=$_REQUEST['WebPage'];
 	if(!isset($WebPage)) {
-		$WebPage='';
+		@$WebPage=$_REQUEST['domain'];
+		
+		if(!isset($WebPage)) {
+			$WebPage='';
+		}
 	}
 
 	@$Comment=$_REQUEST['Comment'];
 	if(!isset($Comment)) {
-		$Comment='';
+		@$Comment=$_REQUEST['comment'];
+	
+		if(!isset($Comment)) {
+			$Comment='';
+		}
 	}
 
 	@$Object1CId=$_REQUEST['Object1CId'];
@@ -105,7 +124,11 @@
 
 	@$AdvChannel=$_REQUEST['AdvChannel'];
 	if(!isset($AdvChannel)) {
-		$AdvChannel='';
+		@$AdvChannel=$_REQUEST['advchannel'];
+	
+		if(!isset($AdvChannel)) {
+			$AdvChannel='';
+		}
 	}
 	@$session_id=$_REQUEST['session_id'];
 	if(!isset($session_id)) {
@@ -119,7 +142,11 @@
 	
 	@$x_roistat=$_REQUEST['X_ROISTAT'];
 	if(!isset($x_roistat)) {
-		$x_roistat='';
+		@$x_roistat=$_REQUEST['x-roistat'];
+		
+		if(!isset($x_roistat)) {
+			$x_roistat='';
+		}
 	}
 
 	@$x_roistat_phone=$_REQUEST['X_ROISTAT_PHONE'];
