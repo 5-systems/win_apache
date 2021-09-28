@@ -27,7 +27,11 @@
 	@$BranchID=$_REQUEST['BranchID'];
 	@$Comment=$_REQUEST['Comment'];
 	@$OrderID=$_REQUEST['OrderID'];
+	@$RequestID=$_REQUEST['RequestID'];
 	@$Mark=$_REQUEST['Mark'];
+	@$Model=$_REQUEST['Model'];
+	@$MarkID=$_REQUEST['MarkID'];
+	@$ModelID=$_REQUEST['ModelID'];
 	@$Call=$_REQUEST['Call'];
 	@$Sms=$_REQUEST['Sms'];
 	@$Push=$_REQUEST['Push'];
@@ -43,8 +47,37 @@
 	@$FirstName=$_REQUEST['FirstName'];
 	@$MiddleName=$_REQUEST['MiddleName'];
 	@$Sex=$_REQUEST['Sex'];
+	@$All=$_REQUEST['All'];
+	@$Type=$_REQUEST['Type'];
+	@$CategoryID=$_REQUEST['CategoryID'];
+	@$XML=$_REQUEST['XML'];
+	@$Limit=$_REQUEST['Limit'];
+	@$ServiceIDs=$_REQUEST['ServiceIDs'];
+	@$CarComment=$_REQUEST['CarComment'];
+	@$VIN=$_REQUEST['VIN'];
+	@$OtherService=$_REQUEST['OtherService'];
+	@$DoneePhone=$_REQUEST['DoneePhone'];
+	@$AccountID=$_REQUEST['AccountID'];
+	@$Volume=$_REQUEST['Volume'];
+	@$DoneeEmail=$_REQUEST['DoneeEmail'];
+	@$Prices=$_REQUEST['Prices'];
+	@$Date=$_REQUEST['Date'];
+	@$Datetime=$_REQUEST['Datetime'];
 	
 	// Initialize variables
+	If( !isset($OtherService) ) {
+		$OtherService='';	
+	}
+	If( !isset($ServiceIDs) ) {
+		$ServiceIDs='';	
+	}
+	If( !isset($VIN) ) {
+		$VIN='';	
+	}
+	If( !isset($CarComment) ) {
+		$CarComment='';	
+	}	
+	
 	If( !isset($MarketingProgram) ) {
 		$MarketingProgram='';	
 	}	
@@ -64,6 +97,10 @@
 	If( !isset($ClientID) ) {
 		$ClientID='';	
 	}	
+
+	If( !isset($RequestID) ) {
+		$RequestID='';	
+	}
 	
 	If( !isset($Phone1) ) {
 		$Phone1='';	
@@ -97,8 +134,24 @@
 		$Mark='';	
 	}
 
+	If( !isset($Model) ) {
+		$Model='';	
+	}
+
+	If( !isset($MarkID) ) {
+		$MarkID='';	
+	}
+
+	If( !isset($ModelID) ) {
+		$ModelID='';	
+	}
+
 	If( !isset($Call) ) {
 		$Call='';	
+	}
+
+	If( !isset($All) ) {
+		$All='';	
 	}
 
 	If( !isset($Sms) ) {
@@ -148,6 +201,50 @@
 	If( !isset($Sex) ) {
 		$Sex='';	
 	}
+	
+	If( !isset($Type) ) {
+		$Type='';	
+	}
+			
+	If( !isset($CategoryID) ) {
+		$CategoryID='';	
+	}
+			
+	If( !isset($XML) ) {
+		$XML='';	
+	}
+			
+	If( !isset($Limit) ) {
+		$Limit='';	
+	}
+
+	If( !isset($DoneePhone) ) {
+		$DoneePhone='';	
+	}
+
+	If( !isset($AccountID) ) {
+		$AccountID='';	
+	}
+
+	If( !isset($Volume) ) {
+		$Volume='';	
+	}
+
+	If( !isset($DoneeEmail) ) {
+		$DoneeEmail='';	
+	}
+
+	If( !isset($Prices) ) {
+		$Prices=array();
+	}
+
+	If( !isset($Date) ) {
+		$Date='';	
+	}
+
+	If( !isset($Datetime) ) {
+		$Datetime='';	
+	}	
 			
 	// Write log
 	write_log($_REQUEST, $log_file);
@@ -155,7 +252,7 @@
 	ini_set("soap.wsdl_cache_enabled", "1");
 	ini_set("soap.wsdl_cache_limit", "10");
 	ini_set("soap.wsdl_cache_ttl", "100000000");
-	ini_set("soap.wsdl_cache", WSDL_CACHE_MEMORY);
+	ini_set("soap.wsdl_cache", 2);
 	
 	try {
 		$SoapClient1C = NULL;
@@ -181,6 +278,179 @@
 		$params['ClientID']=$ClientID;
 		
 		$Result = $SoapClient1C->loyalty_GetClientProfile($params);	
+	}
+	elseif(isset($MethodId) && $MethodId=="loyalty_GetClientProfileByPhone") {
+		$params=Array();
+		$params['Phone']=$Phone;
+		
+		$Result = $SoapClient1C->loyalty_GetClient($params);
+		$result_str='';
+		foreach($Result as $line) {
+			$result_str=$line;
+		}
+		
+		$result_arr=array();
+		if( strlen($result_str)>0 ) {
+			$result_arr=json_decode($result_str, true);
+		}
+
+		$result_ClientID='';
+		if( is_array($result_arr)
+		    && count($result_arr)>1
+		    && array_key_exists("ClientID",  $result_arr[1]) ) {
+
+		    $result_ClientID=$result_arr[1]["ClientID"];
+		}
+
+		$Result=array("Result"=>"2");
+		if( strlen($result_ClientID)>0 ) {
+			$params=Array();
+			$params['ClientID']=$result_ClientID;		
+		
+			$Result = $SoapClient1C->loyalty_GetClientProfile($params);
+		}
+		
+	}	
+	elseif(isset($MethodId) && $MethodId=="loyalty_GetClientCarOrders") {
+		$params=Array();
+		$params['ClientID']=$ClientID;
+		$params['CarID']=$CarID;
+		
+		$Result = $SoapClient1C->loyalty_GetClientCarOrders($params);	
+	}
+	elseif(isset($MethodId) && $MethodId=="loyalty_GetClientCarInfo") {
+		$params=Array();
+		$params['ClientID']=$ClientID;
+		$params['CarID']=$CarID;
+		
+		$Result = $SoapClient1C->loyalty_GetClientCarInfo($params);	
+	}
+	elseif(isset($MethodId) && $MethodId=="loyalty_GetClientInfo") {
+		$params=Array();
+		$params['ClientID']=$ClientID;
+		
+		$Result = $SoapClient1C->loyalty_GetClientInfo($params);	
+	}
+	elseif(isset($MethodId) && $MethodId=="loyalty_GetCategories") {
+		$params=Array();
+		$params['CategoryID']=$CategoryID;
+		
+		$Result = $SoapClient1C->loyalty_GetCategories($params);	
+	}
+	elseif(isset($MethodId) && $MethodId=="loyalty_GetClientRequests") {
+		$params=Array();
+		$params['ClientID']=$ClientID;
+		$params['Phone']=$Phone;
+		
+		$Result = $SoapClient1C->loyalty_GetClientRequests($params);	
+	}
+	elseif(isset($MethodId) && $MethodId=="loyalty_CancelClientRequest") {
+		$params=Array();
+		$params['ClientID']=$ClientID;
+		$params['Phone']=$Phone;
+		$params['RequestID']=$RequestID;
+		
+		$Result = $SoapClient1C->loyalty_CancelClienRequest($params);	
+	}
+	elseif(isset($MethodId) && $MethodId=="loyalty_GetClientCarList") {
+		$params=Array();
+		$params['ClientID']=$ClientID;
+		$params['All']=$All;
+		
+		$Result = $SoapClient1C->loyalty_GetClientCarList($params);	
+	}
+	elseif(isset($MethodId) && $MethodId=="loyalty_GetClientCarOrder") {
+		$params=Array();
+		$params['OrderID']=$OrderID;
+		$params['Type']=$Type;
+		
+		$Result = $SoapClient1C->loyalty_GetClientCarOrder($params);	
+	}
+	elseif(isset($MethodId) && $MethodId=="loyalty_GetClientBonusSum") {
+		$params=Array();
+		$params['ClientID']=$ClientID;
+		
+		$Result = $SoapClient1C->loyalty_GetClientBonusSum($params);	
+	}
+	elseif(isset($MethodId) && $MethodId=="loyalty_GetClientBonusHistory") {
+		$params=Array();
+		$params['ClientID']=$ClientID;
+		
+		$Result = $SoapClient1C->loyalty_GetClientBonusHistory($params);	
+	}
+	elseif(isset($MethodId) && $MethodId=="loyalty_GetServices") {
+		$params=Array();
+		$params['CategoryID']=$CategoryID;
+		$params['CarID']=$CarID;
+		$params['Mark']=$Mark;
+		$params['Model']=$Model;
+		$params['MarkID']=$MarkID;
+		$params['ModelID']=$ModelID;
+		
+		$Result = $SoapClient1C->loyalty_GetServices($params);	
+	}
+	elseif(isset($MethodId) && $MethodId=="loyalty_GetAllServices") {
+		$params=Array();
+		$params['CarID']=$CarID;
+		$params['MarkID']=$MarkID;
+		$params['ModelID']=$ModelID;
+		
+		$Result = $SoapClient1C->loyalty_GetAllServices($params);	
+	}
+	elseif(isset($MethodId) && $MethodId=="loyalty_AddClientRequest") {
+		
+		$XML='<?xml version="1.0" encoding="UTF-8"?><data>';
+		
+		$XML.='<object type="string" name="ClientID">'.$ClientID.'</object>';
+		$XML.='<object type="string" name="Phone">'.$Phone.'</object>';
+		$XML.='<object type="string" name="CarID">'.$CarID.'</object>';
+		$XML.='<object type="string" name="VIN">'.$VIN.'</object>';
+		$XML.='<object type="string" name="CarComment">'.$CarComment.'</object>';
+		$XML.='<object type="string" name="OtherService">'.$OtherService.'</object>';
+		
+		$loc_ServiceIDs=array();
+		if( is_array($ServiceIDs) ) {
+			$loc_ServiceIDs=$ServiceIDs;
+		}
+		else {
+			$loc_ServiceID[]=$ServiceIDs;
+		}
+		
+		reset($loc_ServiceIDs);
+		foreach( $loc_ServiceIDs as $key=>$value ) {
+			$XML.='<object type="string" name="ServiceIDs">'.$value.'</object>';
+		}
+
+		$loc_Prices=array();
+		if( is_array($Prices) ) {
+			$loc_Prices=$Prices;
+		}
+		else {
+			$loc_Prices[]=$Prices;
+		}
+
+		reset($loc_Prices);
+		foreach( $loc_Prices as $key=>$value ) {
+			$XML.='<object type="string" name="Prices">'.$value.'</object>';
+		}			
+			
+		$XML.='<object type="string" name="BranchID">'.$BranchID.'</object>';
+		$XML.='<object type="string" name="Comment">'.$Comment.'</object>';
+		$XML.='<object type="string" name="Datetime">'.$Datetime.'</object>';
+		$XML.='</data>';
+		
+		$params=Array();
+		$params['XML']=$XML;		
+		write_log($XML, $log_file);
+		
+		$Result = $SoapClient1C->loyalty_AddClientRequest($params);
+	}
+	elseif(isset($MethodId) && $MethodId=="loyalty_GetCarRecommendations") {
+		$params=Array();
+		$params['CarID']=$CarID;
+		$params['Limit']=$Limit;
+		
+		$Result = $SoapClient1C->loyalty_GetCarRecommendations($params);	
 	}
 	elseif(isset($MethodId) && $MethodId=="loyalty_UpdateClientProfile") {
 		$params=Array();
@@ -305,7 +575,48 @@
 	elseif(isset($MethodId) && $MethodId=="loyalty_GetWorks") {
 		$Result = $SoapClient1C->loyalty_GetWorks();	
 	}		
+	elseif(isset($MethodId) && $MethodId=="loyalty_GiveBonus") {
+
+		$params=Array();
+		$params['ClientID']=$ClientID;
+		$params['DoneePhone']=$DoneePhone;
+		$params['AccountID']=$AccountID;
+		$params['Volume']=$Volume;
+		$params['DoneeEmail']=$DoneeEmail;
+	
+		$Result = $SoapClient1C->loyalty_GiveBonus($params);	
+	}
+	elseif(isset($MethodId) && $MethodId=="loyalty_GetBookingTimes") {
+	
+		$XML='<?xml version="1.0" encoding="UTF-8"?><data>';
 		
+		$XML.='<object type="string" name="Date">'.$Date.'</object>';
+		$XML.='<object type="string" name="BranchID">'.$BranchID.'</object>';
+		
+		$loc_ServiceIDs=array();
+		if( is_array($ServiceIDs) ) {
+			$loc_ServiceIDs=$ServiceIDs;
+		}
+		else {
+			$loc_ServiceIDs[]=$ServiceIDs;
+		}
+		
+		reset($loc_ServiceIDs);
+		foreach( $loc_ServiceIDs as $key=>$value ) {
+			$XML.='<object type="string" name="ServiceIDs">'.$value.'</object>';
+		}
+		
+		$XML.='<object type="string" name="ClientID">'.$ClientID.'</object>';
+		$XML.='<object type="string" name="CarID">'.$CarID.'</object>';
+		$XML.='<object type="string" name="VIN">'.$VIN.'</object>';
+
+		$XML.='</data>';	
+	
+		$params=Array();
+		$params['XML']=$XML;
+
+		$Result = $SoapClient1C->loyalty_GetBookingTimes($params);	
+	}		
 	
 	unset($SoapClient1C);
 
@@ -317,6 +628,7 @@
 		$result=str_replace("\r", ' ', $result);
 		$result=str_replace("\n", ' ', $result);
 
+		write_log($result, $log_file);
 		echo $result;			
 	}
 		

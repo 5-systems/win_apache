@@ -1,6 +1,6 @@
 <?php
 
-// version 13.03.2020
+// version 28.09.2021
 //include_once('5c_std_lib.php');
 
 date_default_timezone_set('Etc/GMT-3');
@@ -111,8 +111,8 @@ function write_log($message, $log_path, $prefix='') {
 	
 	if( strlen($log_path)===0 ) return($function_result);
 	
-	if( is_string($message) ) {
-		$message_tmp=$message;
+	if( !is_array($message) ) {
+		$message_tmp=strVal($message);
 		$message=Array();
 		$message['log']=$message_tmp;
 	}
