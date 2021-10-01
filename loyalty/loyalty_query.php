@@ -315,6 +315,7 @@
 		$params=Array();
 		$params['ClientID']=$ClientID;
 		$params['CarID']=$CarID;
+		$params['Phone']=$Phone;
 		
 		$Result = $SoapClient1C->loyalty_GetClientCarOrders($params);	
 	}
@@ -407,6 +408,7 @@
 		$XML.='<object type="string" name="VIN">'.$VIN.'</object>';
 		$XML.='<object type="string" name="CarComment">'.$CarComment.'</object>';
 		$XML.='<object type="string" name="OtherService">'.$OtherService.'</object>';
+		$XML.='<object type="string" name="ClientName">'.$Name.'</object>';		
 		
 		$loc_ServiceIDs=array();
 		if( is_array($ServiceIDs) ) {
