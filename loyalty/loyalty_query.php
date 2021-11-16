@@ -439,6 +439,11 @@
 		$XML.='<object type="string" name="BranchID">'.$BranchID.'</object>';
 		$XML.='<object type="string" name="Comment">'.$Comment.'</object>';
 		$XML.='<object type="string" name="Datetime">'.$Datetime.'</object>';
+
+		if (array_key_exists('Mobile-Application', getallheaders())) {
+    			$XML.='<object type="string" name="RequestSource">'.'Mobile-Application'.'</object>';
+		}
+
 		$XML.='</data>';
 		
 		$params=Array();
