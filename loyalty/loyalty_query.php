@@ -444,7 +444,7 @@
 		$XML.='<object type="string" name="MarkID">'.$MarkID.'</object>';
 		$XML.='<object type="string" name="ModelID">'.$ModelID.'</object>';		
 
-		if (array_key_exists('Mobile-Application', getallheaders())) {
+		if ( array_key_exists('Mobile-Application', getallheaders()) || array_key_exists('Mobile-Application', $_REQUEST) ) {
     			$XML.='<object type="string" name="RequestSource">'.'Mobile-Application'.'</object>';
 		}
 
