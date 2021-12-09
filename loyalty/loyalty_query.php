@@ -265,7 +265,7 @@
 	catch (Exception $e) {
 		$error_text='Exception: '.$e->getMessage();
 		write_log($error_text, $log_file);
-		exit('1');
+		exit($error_text);
 	}
 	
 	$Result = Array();
