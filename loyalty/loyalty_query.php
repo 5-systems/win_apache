@@ -245,6 +245,11 @@
 	If( !isset($Datetime) ) {
 		$Datetime='';	
 	}	
+
+	If( !isset($IntegrationID) ) {
+		$IntegrationID='';
+	}
+
 			
 	// Write log
 	write_log($_REQUEST, $log_file);
@@ -316,6 +321,7 @@
 		$params['ClientID']=$ClientID;
 		$params['CarID']=$CarID;
 		$params['Phone']=$Phone;
+		$params['IntegrationID']=$IntegrationID;
 		
 		$Result = $SoapClient1C->loyalty_GetClientCarOrders($params);	
 	}
@@ -323,6 +329,7 @@
 		$params=Array();
 		$params['ClientID']=$ClientID;
 		$params['CarID']=$CarID;
+		$params['IntegrationID']=$IntegrationID;
 		
 		$Result = $SoapClient1C->loyalty_GetClientCarInfo($params);	
 	}
@@ -357,6 +364,7 @@
 		$params=Array();
 		$params['ClientID']=$ClientID;
 		$params['All']=$All;
+		$params['IntegrationID']=$IntegrationID;
 		
 		$Result = $SoapClient1C->loyalty_GetClientCarList($params);	
 	}
@@ -443,6 +451,7 @@
 		$XML.='<object type="string" name="Model">'.$Model.'</object>';		
 		$XML.='<object type="string" name="MarkID">'.$MarkID.'</object>';
 		$XML.='<object type="string" name="ModelID">'.$ModelID.'</object>';		
+		$XML.='<object type="string" name="IntegrationID">'.$IntegrationID.'</object>';
 
 		if ( array_key_exists('Mobile-Application', getallheaders()) || array_key_exists('Mobile-Application', $_REQUEST) ) {
     			$XML.='<object type="string" name="RequestSource">'.'Mobile-Application'.'</object>';
