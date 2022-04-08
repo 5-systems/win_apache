@@ -342,6 +342,7 @@
 	elseif(isset($MethodId) && $MethodId=="loyalty_GetCategories") {
 		$params=Array();
 		$params['CategoryID']=$CategoryID;
+		$params['IntegrationID']=$IntegrationID;
 		
 		$Result = $SoapClient1C->loyalty_GetCategories($params);	
 	}
@@ -403,6 +404,7 @@
 		$params['CarID']=$CarID;
 		$params['MarkID']=$MarkID;
 		$params['ModelID']=$ModelID;
+		$params['IntegrationID']=$IntegrationID;
 		
 		$Result = $SoapClient1C->loyalty_GetAllServices($params);	
 	}
