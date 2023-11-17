@@ -28,6 +28,8 @@
 	@$Comment=$_REQUEST['Comment'];
 	@$OrderID=$_REQUEST['OrderID'];
 	@$RequestID=$_REQUEST['RequestID'];
+  @$RecommendationID=$_REQUEST['RecommendationID'];
+	@$Reason=$_REQUEST['Reason'];
 	@$Mark=$_REQUEST['Mark'];
 	@$Model=$_REQUEST['Model'];
 	@$MarkID=$_REQUEST['MarkID'];
@@ -36,6 +38,7 @@
 	@$Sms=$_REQUEST['Sms'];
 	@$Push=$_REQUEST['Push'];
 	@$Phone=$_REQUEST['Phone'];
+  @$TelegramID=$_REQUEST['TelegramID'];
 	@$Name=$_REQUEST['Name'];
 	@$MessageID=$_REQUEST['MessageID'];
 	@$MarketingProgram=$_REQUEST['MarketingProgram'];
@@ -101,6 +104,14 @@
 	If( !isset($RequestID) ) {
 		$RequestID='';	
 	}
+
+  If( !isset($RecommendationID) ) {
+		$RecommendationID='';	
+	}	
+	
+	If( !isset($Reason) ) {
+		$Reason='';	
+	}
 	
 	If( !isset($Phone1) ) {
 		$Phone1='';	
@@ -164,6 +175,10 @@
 
 	If( !isset($Phone) ) {
 		$Phone='';	
+	}
+
+  If( !isset($TelegramID) ) {
+		$TelegramID='';	
 	}
 
 	If( !isset($Name) ) {
@@ -474,6 +489,14 @@
 		
 		$Result = $SoapClient1C->loyalty_GetCarRecommendations($params);	
 	}
+  elseif(isset($MethodId) && $MethodId=="loyalty_RejectRecommendation") {
+		$params=Array();
+		$params['CarID']=$CarID;
+		$params['RecommendationID']=$RecommendationID;
+		$params['Reason']=$Reason;
+		
+		$Result = $SoapClient1C->loyalty_RejectRecommendation($params);	
+	}
 	elseif(isset($MethodId) && $MethodId=="loyalty_UpdateClientProfile") {
 		$params=Array();
 		$params['ClientID']=$ClientID;
@@ -545,6 +568,7 @@
 	elseif(isset($MethodId) && $MethodId=="loyalty_GetClient") {
 		$params=Array();
 		$params['Phone']=$Phone;
+    $params['TelegramID']=$TelegramID;
 				
 		$Result = $SoapClient1C->loyalty_GetClient($params);	
 	}
